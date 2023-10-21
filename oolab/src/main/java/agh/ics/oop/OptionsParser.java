@@ -3,27 +3,30 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 public class OptionsParser {
+
+    private static MoveDirection parseArg(String arg) {
+        return switch (arg) {
+            case "f" -> MoveDirection.FORWARD;
+            case "b" -> MoveDirection.BACKWARD;
+            case "r" -> MoveDirection.RIGHT;
+            case "l" -> MoveDirection.LEFT;
+            default -> MoveDirection.NONE;
+        };
+    }
     public static MoveDirection[] parse(String[] args) {
-        int result_length = 0;
+        int resultLength = 0;
         for (String arg: args) {
-            if (arg != "f" && arg != "b" && arg != "l" && arg != "r") result_length++;
+            if (parseArg(arg) != MoveDirection.NONE) resultLength++;
         }
-        MoveDirection[] result = new MoveDirection[result_length];
+        MoveDirection[] result = new MoveDirection[resultLength];
 
         int idx = 0;
         for (String arg: args) {
-            MoveDirection dir = switch (arg) {
-                case "f" -> MoveDirection.FORWARD;
-                case "r" -> MoveDirection.RIGHT;
-                case "l" -> MoveDirection.LEFT;
-                case "b" -> MoveDirection.BACKWARD;
-                default -> MoveDirection.NONE;
-            };
+            MoveDirection dir = parseArg(arg);
 
-            if (dir != MoveDirection.NONE) {
-                result[idx] = dir;
-                idx++;
-            }
+            if (dir == MoveDirection.NONE) continue;
+            result[idx] = dir;
+            idx++;
         }
 
         return result;

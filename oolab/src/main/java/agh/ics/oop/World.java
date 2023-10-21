@@ -12,14 +12,12 @@ public class World {
 
  public static void run(MoveDirection[] directions) {
      for (MoveDirection dir: directions) {
-         String instructionStr = "Zwierzak " + switch(dir) {
-             case FORWARD -> "idzie do przodu";
-             case BACKWARD -> "idzie do tyłu";
-             case LEFT -> "skręca w lewo";
-             case RIGHT -> "skręca w prawo";
-             default -> "";
-         };
-         System.out.println(instructionStr);
+         switch(dir) {
+             case FORWARD -> System.out.println("Zwierzak idzie do przodu");
+             case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
+             case LEFT -> System.out.println("Zwierzak skręca w lewo");
+             case RIGHT -> System.out.println("Zwierzak skręca w prawo");
+         }
      }
  }
 
