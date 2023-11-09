@@ -2,6 +2,9 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OptionsParser {
 
     private static MoveDirection parseArg(String arg) {
@@ -13,20 +16,14 @@ public class OptionsParser {
             default -> MoveDirection.NONE;
         };
     }
-    public static MoveDirection[] parse(String[] args) {
-        int resultLength = 0;
-        for (String arg: args) {
-            if (parseArg(arg) != MoveDirection.NONE) resultLength++;
-        }
-        MoveDirection[] result = new MoveDirection[resultLength];
+    public static List<MoveDirection> parse(String[] args) {
+        var result = new ArrayList<MoveDirection>();
 
-        int idx = 0;
         for (String arg: args) {
             MoveDirection dir = parseArg(arg);
 
             if (dir == MoveDirection.NONE) continue;
-            result[idx] = dir;
-            idx++;
+            result.add(dir);
         }
 
         return result;
