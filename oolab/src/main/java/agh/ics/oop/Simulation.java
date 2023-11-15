@@ -1,8 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +9,19 @@ public class Simulation {
 
     private final List <Animal> animalsList;
     private final List <MoveDirection> movesList;
-    public Simulation(List <Vector2d> startPositions, List <MoveDirection> moves) {
+
+    private final WorldMap map;
+    public Simulation(List <Vector2d> startPositions, List <MoveDirection> moves, WorldMap map) {
         movesList = moves;
 
+        this.map = map;
+
         animalsList = new ArrayList<>();
-        for (Vector2d start : startPositions) animalsList.add(new Animal(start));
+        for (Vector2d start : startPositions) {
+            var anim = new Animal(start);
+            animalsList.add(anim);
+            map.place(anim);
+        }
     }
 
     public void run() {
@@ -23,10 +29,13 @@ public class Simulation {
         for (MoveDirection move : movesList) {
                 var animal = animalsList.get(animalIx);
 
-                animal.move(move);
-                System.out.printf("Zwierzę %d : %s%n", animalIx, animal);
+                map.move(animal, move);
 
-                animalIx = (animalIx+1)%animalsList.size();
+                animalIx++;
+                if (animalIx == animalsList.size()) {
+                    animalIx = 0;
+                    System.out.println(map);
+            }
         }
     }
 
