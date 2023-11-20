@@ -10,8 +10,8 @@ public class Simulation {
     private final List <Animal> animalsList;
     private final List <MoveDirection> movesList;
 
-    private final WorldMap map;
-    public Simulation(List <Vector2d> startPositions, List <MoveDirection> moves, WorldMap map) {
+    private final WorldMap <Animal, Vector2d> map;
+    public Simulation(List <Vector2d> startPositions, List <MoveDirection> moves, WorldMap <Animal, Vector2d> map) {
         movesList = moves;
 
         this.map = map;
