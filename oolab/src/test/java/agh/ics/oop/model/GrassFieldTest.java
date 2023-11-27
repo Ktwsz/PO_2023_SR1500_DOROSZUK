@@ -11,7 +11,6 @@ public class GrassFieldTest {
     void placeTest() {
         var map = new GrassField(10, 1);
         List<Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
-
         map.place(animals.get(0));
         map.place(animals.get(1));
         map.place(animals.get(2));
@@ -24,8 +23,8 @@ public class GrassFieldTest {
         assertTrue(map.isOccupied(animals.get(1).getPosition()));
         assertTrue(map.isOccupied(animals.get(2).getPosition()));
 
-        assertEquals(new Grass(new Vector2d(2, 4)), map.objectAt(new Vector2d(2, 4)));
-        assertEquals(new Grass(new Vector2d(4, 4)), map.objectAt(new Vector2d(4, 4)));
+        assertEquals(new Grass(new Vector2d(5, 0)), map.objectAt(new Vector2d(5, 0)));
+        assertEquals(new Grass(new Vector2d(2, 3)), map.objectAt(new Vector2d(2, 3)));
         assertEquals(new Grass(new Vector2d(2, 2)), map.objectAt(new Vector2d(2, 2)));
     }
 

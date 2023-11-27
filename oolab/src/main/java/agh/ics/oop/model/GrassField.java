@@ -5,7 +5,6 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
@@ -17,16 +16,10 @@ public class GrassField extends AbstractWorldMap{
     private Vector2d minObjectPos;
 
     public GrassField(int grassCount, Integer randomSeed) {
-        var generator = (randomSeed != null)? new Random(randomSeed) : new Random();
         int upperBound = (int)Math.ceil(Math.sqrt(grassCount * 10));
+        var randomPositionsGenerator = new RandomPositionGenerator(upperBound, upperBound, grassCount, randomSeed);
 
-        for (int i = 0; i < grassCount; ++i) {
-            Vector2d newPos;
-            do {
-                int randX = generator.nextInt(upperBound), randY = generator.nextInt(upperBound);
-                newPos = new Vector2d(randX, randY);
-            } while (super.isOccupied(newPos));
-
+        for (Vector2d newPos: randomPositionsGenerator) {
             grassMap.put(newPos, new Grass(newPos));
             updateMapBound(newPos);
         }
