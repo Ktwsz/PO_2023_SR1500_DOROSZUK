@@ -11,6 +11,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimulationTest {
+
+    @Test
+    void runTestAll() {
+        runTestBasic();
+        runTestBig();
+        runTestBounds();
+        runTestCollisions1();
+        runTestCollisions2();
+    }
     @Test
     void runTestBasic() {
         List<MoveDirection> directions = OptionsParser.parse(new String[]{"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"});
