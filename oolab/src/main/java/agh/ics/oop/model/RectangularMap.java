@@ -17,19 +17,11 @@ public class RectangularMap implements WorldMap <Animal, Vector2d>{
         this.width = width;
         this.height = height;
         UPPER_RIGHT_VECTOR = new Vector2d(width-1, height-1);
-
-        createMap();
-    }
-
-    private void createMap() {
-        for (int i = 0; i < width; i++)
-            for (int j = 0; j < height; j++)
-                animals.put(new Vector2d(i, j), null);
     }
 
     @Override
     public String toString() {
-        MapVisualizer mapVisualizer = new MapVisualizer(this);
+        var mapVisualizer = new MapVisualizer(this);
         return mapVisualizer.draw(LOWER_LEFT_VECTOR, UPPER_RIGHT_VECTOR);
     }
 
@@ -49,9 +41,6 @@ public class RectangularMap implements WorldMap <Animal, Vector2d>{
             animal.move(direction, this);
             return;
         }
-
-        Vector2d newPosition = animal.getPosition().add(animal.getDirection().toUnitVector());
-        if (isOccupied(newPosition)) return;
 
         animals.remove(animal.getPosition());
         animal.move(direction, this);
