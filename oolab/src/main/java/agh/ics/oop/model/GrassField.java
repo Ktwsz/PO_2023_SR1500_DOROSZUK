@@ -13,9 +13,6 @@ public class GrassField extends AbstractWorldMap{
     private final Vector2d LOWER_LEFT_VECTOR = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
     private final Vector2d UPPER_RIGHT_VECTOR = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-    private Vector2d maxObjectPos;
-    private Vector2d minObjectPos;
-
     public GrassField(int grassCount, Integer randomSeed) {
         var generator = (randomSeed != null)? new Random(randomSeed) : new Random();
         int upperBound = (int)Math.ceil(Math.sqrt(grassCount * 10));
@@ -37,17 +34,16 @@ public class GrassField extends AbstractWorldMap{
     }
 
     private void updateMapBound(Vector2d pos) {
-        maxObjectPos = (maxObjectPos == null)? pos : maxObjectPos.upperRight(pos);
-        minObjectPos = (minObjectPos == null)? pos : minObjectPos.lowerLeft(pos);
+        Vector2d maxObjectPos = (bounds == null)? pos : bounds.upperRightVector().upperRight(pos);
+        Vector2d minObjectPos = (bounds == null)? pos : bounds.lowerLeftVector().lowerLeft(pos);
+
+        bounds = new Boundary(minObjectPos, maxObjectPos);
     }
 
     @Override
-    public boolean place(Animal animal) {
-        if (objectAt(animal.getPosition()) instanceof Animal) return false;
-
+    public void place(Animal animal) throws PositionAlreadyOccupiedException {
+        super.place(animal);
         updateMapBound(animal.getPosition());
-
-        return super.place(animal);
     }
 
     @Override
@@ -58,12 +54,6 @@ public class GrassField extends AbstractWorldMap{
     @Override
     public boolean canMoveTo(Vector2d position) {
         return position.follows(LOWER_LEFT_VECTOR) && position.precedes(UPPER_RIGHT_VECTOR) && !(objectAt(position) instanceof Animal);
-    }
-
-    @Override
-    public String toString() {
-        var mapVisualizer = new MapVisualizer(this);
-        return mapVisualizer.draw(minObjectPos, maxObjectPos);
     }
 
     @Override
