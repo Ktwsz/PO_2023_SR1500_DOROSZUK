@@ -2,7 +2,6 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,16 +21,8 @@ public class SimulationEngine {
         for (Simulation sim : simulationList) sim.run();
     }
 
-    /*
-        public void runAsync() {
-            for (Thread thread : simulationThreads) thread.start();
-        }
-    */
-
     public void runAsync() {
         for (Thread thread : simulationThreads) thread.start();
-
-        awaitSimulationsEnd();
     }
 
     public void awaitSimulationsEnd() {
@@ -53,7 +44,5 @@ public class SimulationEngine {
 
     public void runAsyncInThreadPool() {
         for (Simulation sim : simulationList) executorService.submit(sim);
-
-        awaitSimulationsEnd();
     }
 }

@@ -21,10 +21,12 @@ public abstract class AbstractWorldMap implements WorldMap {
             listener.mapChanged(this, message);
     }
 
+    @Override
     public void addListener(MapChangeListener listener) {
         listenersList.add(listener);
     }
 
+    @Override
     public void removeListener(MapChangeListener listener) {
         listenersList.remove(listener);
     }

@@ -31,13 +31,23 @@ public class Simulation implements Runnable{
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         int animalIx = 0;
         for (MoveDirection move : movesList) {
-                var animal = animalsList.get(animalIx);
+            var animal = animalsList.get(animalIx);
 
-                map.move(animal, move);
+            map.move(animal, move);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                animalIx = (animalIx + 1) % animalsList.size();
+            animalIx = (animalIx + 1) % animalsList.size();
         }
     }
 

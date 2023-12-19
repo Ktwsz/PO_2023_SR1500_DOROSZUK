@@ -48,6 +48,12 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
+    public void move(Animal animal, MoveDirection moveDirection) {
+        super.move(animal, moveDirection);
+        updateMapBound(animal.getPosition());
+    }
+
+    @Override
     public WorldElement objectAt(Vector2d position) {
         return (animalMap.containsKey(position))? animalMap.get(position) : grassMap.get(position);
     }
