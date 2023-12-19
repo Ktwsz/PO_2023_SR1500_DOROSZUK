@@ -22,16 +22,8 @@ public class SimulationEngine {
         for (Simulation sim : simulationList) sim.run();
     }
 
-    /*
-        public void runAsync() {
-            for (Thread thread : simulationThreads) thread.start();
-        }
-    */
-
     public void runAsync() {
         for (Thread thread : simulationThreads) thread.start();
-
-        awaitSimulationsEnd();
     }
 
     public void awaitSimulationsEnd() {
@@ -53,7 +45,5 @@ public class SimulationEngine {
 
     public void runAsyncInThreadPool() {
         for (Simulation sim : simulationList) executorService.submit(sim);
-
-        awaitSimulationsEnd();
     }
 }
