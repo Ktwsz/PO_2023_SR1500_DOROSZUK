@@ -10,6 +10,8 @@ public class Simulation implements Runnable{
     private final List <Animal> animalsList;
     private final List <MoveDirection> movesList;
 
+    private boolean timer = true;
+
     private final WorldMap map;
     public Simulation(List <Vector2d> startPositions, List <MoveDirection> moves, WorldMap map) {
         movesList = moves;
@@ -29,13 +31,20 @@ public class Simulation implements Runnable{
         }
     }
 
+    public void setTimer(boolean val) {
+        timer = val;
+    }
+
     @Override
     public void run() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (timer) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
         int animalIx = 0;
         for (MoveDirection move : movesList) {
             var animal = animalsList.get(animalIx);

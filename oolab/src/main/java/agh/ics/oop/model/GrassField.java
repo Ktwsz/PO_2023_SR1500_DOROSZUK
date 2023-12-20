@@ -2,10 +2,9 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
@@ -54,22 +53,23 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return (animalMap.containsKey(position))? animalMap.get(position) : grassMap.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return super.objectAt(position).or(() -> Optional.ofNullable(grassMap.get(position)));
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return position.follows(LOWER_LEFT_VECTOR) && position.precedes(UPPER_RIGHT_VECTOR) && !(objectAt(position) instanceof Animal);
+        return position.follows(LOWER_LEFT_VECTOR) && position.precedes(UPPER_RIGHT_VECTOR) && objectAt(position).filter(Animal.class::isInstance).isEmpty();
     }
 
     @Override
     public Collection <WorldElement> getElements() {
-        var elements = super.getElements();
-        for (Map.Entry <Vector2d, Grass> entry: grassMap.entrySet())
-            elements.add(entry.getValue());
+        var grassStream = grassMap.values()
+                                  .stream()
+                                  .map(WorldElement.class::cast);
 
-        return elements;
+        return Stream.concat(super.getElements().stream(), grassStream)
+                     .collect(Collectors.toList());
     }
 
 }

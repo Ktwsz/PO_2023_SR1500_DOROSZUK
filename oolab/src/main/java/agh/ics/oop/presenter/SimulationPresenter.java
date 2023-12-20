@@ -68,8 +68,9 @@ public class SimulationPresenter implements MapChangeListener {
 
         for (int x = bounds.lowerLeftVector().getX(); x <= bounds.upperRightVector().getX(); x++) {
             for (int y = bounds.lowerLeftVector().getY(); y <= bounds.upperRightVector().getY(); y++) {
-                if (map.isOccupied(new Vector2d(x, y))) {
-                    var elem = map.objectAt(new Vector2d(x, y));
+                var optElem = map.objectAt(new Vector2d(x, y));
+                if (optElem.isPresent()) {
+                    var elem = optElem.get();
                     addLabel(elem.toString(), mapGridX(x, bounds), mapGridY(y, bounds));
                 }
             }

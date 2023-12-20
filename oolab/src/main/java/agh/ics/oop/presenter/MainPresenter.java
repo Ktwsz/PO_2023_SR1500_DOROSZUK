@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MainPresenter {
@@ -37,6 +38,8 @@ public class MainPresenter {
 
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
         WorldMap worldMap = new GrassField(10, 1);
+
+        worldMap.addListener((map, message) -> System.out.println(LocalDateTime.now().toString() + " " + message));
 
         presenter.setWorldMap(worldMap);
 
