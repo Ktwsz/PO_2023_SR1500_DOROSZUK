@@ -49,6 +49,11 @@ public class SimulationPresenter implements MapChangeListener {
         simulationGrid.add(y_x_label, x, y);
     }
 
+    private void addImage(WorldElement worldElement, int x, int y) {
+        var imageVBox = new WorldElementBox(worldElement);
+        simulationGrid.add(imageVBox.getCell(), x, y);
+    }
+
     public void drawMap(WorldMap map) {
         if (!simulationGrid.getChildren().isEmpty()) {
             simulationGrid.getChildren().retainAll(simulationGrid.getChildren().get(0)); // hack to retain visible grid lines
@@ -71,7 +76,7 @@ public class SimulationPresenter implements MapChangeListener {
                 var optElem = map.objectAt(new Vector2d(x, y));
                 if (optElem.isPresent()) {
                     var elem = optElem.get();
-                    addLabel(elem.toString(), mapGridX(x, bounds), mapGridY(y, bounds));
+                    addImage(elem, mapGridX(x, bounds), mapGridY(y, bounds));
                 }
             }
         }

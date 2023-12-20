@@ -3,10 +3,7 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.SimulationEngine;
-import agh.ics.oop.model.GrassField;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +20,8 @@ public class MainPresenter {
 
     private final SimulationEngine simulationEngine = new SimulationEngine();
 
+    private int idCounter = 0;
+
     private void configureStage(Stage simulationStage, BorderPane viewSimulation) {
         var scene = new Scene(viewSimulation);
 
@@ -37,9 +36,11 @@ public class MainPresenter {
         List<MoveDirection> directions = getDirections();
 
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        WorldMap worldMap = new GrassField(10, 1);
+        WorldMap worldMap = new GrassField(10, idCounter);
+        idCounter++;
 
         worldMap.addListener((map, message) -> System.out.println(LocalDateTime.now().toString() + " " + message));
+        worldMap.addListener(new FileMapDisplay());
 
         presenter.setWorldMap(worldMap);
 
