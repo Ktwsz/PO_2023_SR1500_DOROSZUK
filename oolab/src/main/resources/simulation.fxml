@@ -2,10 +2,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -18,14 +15,8 @@
         </HBox>
     </center>
     <bottom>
-        <VBox>
             <HBox styleClass="BottomHBox">
                 <Label fx:id="moveDescLabel" textAlignment="CENTER" />
             </HBox>
-            <HBox styleClass="BottomHBox">
-                <TextField fx:id="inputTextField" />
-                <Button fx:id="startButton" text="Start" onAction="#onSimulationStartClicked" />
-            </HBox>
-        </VBox>
     </bottom>
 </BorderPane>

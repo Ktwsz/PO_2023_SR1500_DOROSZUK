@@ -3,6 +3,8 @@ package agh.ics.oop;
 import agh.ics.oop.model.GrassField;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.presenter.MainPresenter;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +17,9 @@ import java.util.List;
 public class SimulationApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        var loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
+        var loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
         BorderPane viewRoot = loader.load();
-        SimulationPresenter presenter = loader.getController();
-
-        var map = new GrassField(10, 1);
-        presenter.setWorldMap(map);
+        MainPresenter presenter = loader.getController();
 
         configureStage(primaryStage, viewRoot);
 

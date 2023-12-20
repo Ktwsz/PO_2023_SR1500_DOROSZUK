@@ -22,11 +22,8 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private Label moveDescLabel;
 
-    @FXML
-    private TextField inputTextField;
-
-
     private WorldMap worldMap;
+
     private final double CELL_WIDTH = 50;
     private final double CELL_HEIGHT = 50;
 
@@ -34,6 +31,7 @@ public class SimulationPresenter implements MapChangeListener {
         worldMap = map;
         worldMap.addListener(this);
     }
+
 
     private int mapGridX(int x, Boundary bounds) {
         return x - bounds.lowerLeftVector().getX() + 1;
@@ -88,27 +86,5 @@ public class SimulationPresenter implements MapChangeListener {
 
     private void updateMoveDesc(String message) {
         moveDescLabel.setText(message);
-    }
-
-    public void onSimulationStartClicked() {
-        List<MoveDirection> directions;
-        try {
-            directions = getDirections();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-
-        var simulation = new Simulation(positions, directions, worldMap);
-        var engine = new SimulationEngine(List.of(simulation));
-        engine.runAsync();
-    }
-
-    private List <MoveDirection> getDirections() throws IllegalArgumentException {
-        String[] args = inputTextField.getText().split(" ");
-
-        return OptionsParser.parse(args);
     }
 }

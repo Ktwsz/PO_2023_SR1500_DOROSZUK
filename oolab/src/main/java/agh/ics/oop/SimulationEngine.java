@@ -1,6 +1,8 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,6 +17,16 @@ public class SimulationEngine {
         this.simulationList = simulationList;
 
         for (Simulation sim : simulationList) simulationThreads.add(new Thread(sim));
+    }
+
+    public SimulationEngine() {
+        this(new ArrayList<Simulation>());
+    }
+
+    public void addAndRun(Simulation simulation) {
+        simulationList.add(simulation);
+        simulationThreads.add(new Thread(simulation));
+        simulationThreads.get(simulationThreads.size() - 1).start();
     }
 
     public void runSync() {
