@@ -11,10 +11,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimulationTest {
+
     @Test
-    void runTest() {
-        List<MoveDirection> directions = OptionsParser.parse(new String[] {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"});
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+    void runTestAll() {
+        runTestBasic();
+        runTestBig();
+        runTestBounds();
+        runTestCollisions1();
+        runTestCollisions2();
+    }
+    @Test
+    void runTestBasic() {
+        List<MoveDirection> directions = OptionsParser.parse(new String[]{"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"});
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
         RectangularMap map = new RectangularMap(5, 5);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
@@ -24,20 +33,26 @@ public class SimulationTest {
 
         assertTrue(simulation.getAnimal(1).isAt(new Vector2d(3, 4)));
         assertTrue(simulation.getAnimal(1).isFacing(MapDirection.NORTH));
+    }
 
-        directions = OptionsParser.parse(new String[] {"f", "f", "f", "f", "f", "f"});
-        positions = List.of(new Vector2d(2, 2));
-        map = new RectangularMap(5, 5);
-        simulation = new Simulation(positions, directions, map);
+    @Test
+    void runTestBounds() {
+        List <MoveDirection> directions = OptionsParser.parse(new String[]{"f", "f", "f", "f", "f", "f"});
+        List <Vector2d> positions = List.of(new Vector2d(2, 2));
+        RectangularMap map = new RectangularMap(5, 5);
+        Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 4)));
         assertTrue(simulation.getAnimal(0).isFacing(MapDirection.NORTH));
+    }
 
-        directions = OptionsParser.parse(new String[] {"f", "b", "l", "r", "f", "b", "l", "r", "f", "b"});
-        positions = List.of(new Vector2d(2, 2), new Vector2d(0, 1), new Vector2d(1, 0), new Vector2d(3, 4), new Vector2d(3, 1));
-        map = new RectangularMap(5, 5);
-        simulation = new Simulation(positions, directions, map);
+    @Test
+    void runTestBig() {
+        List <MoveDirection> directions = OptionsParser.parse(new String[]{"f", "b", "l", "r", "f", "b", "l", "r", "f", "b"});
+        List <Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(0, 1), new Vector2d(1, 0), new Vector2d(3, 4), new Vector2d(3, 1));
+        RectangularMap map = new RectangularMap(5, 5);
+        Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 2)));
@@ -54,12 +69,14 @@ public class SimulationTest {
 
         assertTrue(simulation.getAnimal(4).isAt(new Vector2d(3, 1)));
         assertTrue(simulation.getAnimal(4).isFacing(MapDirection.NORTH));
+    }
 
-
-        directions = OptionsParser.parse(new String[] {"f", "f", "f", "f"});
-        positions = List.of(new Vector2d(2, 1), new Vector2d(2, 0));
-        map = new RectangularMap(5, 5);
-        simulation = new Simulation(positions, directions, map);
+    @Test
+    void runTestCollisions1() {
+        List <MoveDirection> directions = OptionsParser.parse(new String[]{"f", "f", "f", "f"});
+        List <Vector2d> positions = List.of(new Vector2d(2, 1), new Vector2d(2, 0));
+        RectangularMap map = new RectangularMap(5, 5);
+        Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 3)));
@@ -68,10 +85,14 @@ public class SimulationTest {
         assertTrue(simulation.getAnimal(1).isAt(new Vector2d(2, 2)));
         assertTrue(simulation.getAnimal(1).isFacing(MapDirection.NORTH));
 
-        directions = OptionsParser.parse(new String[] {"f", "f", "f", "f"});
-        positions = List.of(new Vector2d(2, 0), new Vector2d(2, 1));
-        map = new RectangularMap(5, 5);
-        simulation = new Simulation(positions, directions, map);
+    }
+
+    @Test
+    void runTestCollisions2() {
+        List <MoveDirection> directions = OptionsParser.parse(new String[] {"f", "f", "f", "f"});
+        List <Vector2d> positions = List.of(new Vector2d(2, 0), new Vector2d(2, 1));
+        RectangularMap map = new RectangularMap(5, 5);
+        Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 1)));
