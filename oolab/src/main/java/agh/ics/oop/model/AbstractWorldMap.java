@@ -1,19 +1,35 @@
 package agh.ics.oop.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import agh.ics.oop.model.util.MapVisualizer;
+
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
     protected final Map<Vector2d, Animal> animalMap = new HashMap<>();
+    protected List<MapChangeListener> listenersList = new ArrayList<>();
+    protected Boundary bounds;
+
+
+    private void mapChanged(String message) {
+        for (MapChangeListener listener : listenersList)
+            listener.mapChanged(this, message);
+    }
+
+    public void addListener(MapChangeListener listener) {
+        listenersList.add(listener);
+    }
+
+    public void removeListener(MapChangeListener listener) {
+        listenersList.remove(listener);
+    }
 
     @Override
-    public boolean place(Animal animal) {
+    public void place(Animal animal) throws PositionAlreadyOccupiedException {
+        if (objectAt(animal.getPosition()) instanceof Animal) throw new PositionAlreadyOccupiedException(animal.getPosition());
+
         animalMap.put(animal.getPosition(), animal);
-        return true;
+        mapChanged("Placed animal at %s".formatted(animal.getPosition()));
     }
 
     @Override
@@ -22,12 +38,15 @@ public abstract class AbstractWorldMap implements WorldMap {
 
         if (direction == MoveDirection.LEFT || direction == MoveDirection.RIGHT) {
             animal.move(direction, this);
+            mapChanged("Animal %s is now facing %s".formatted(animal.getPosition(), animal.getDirection()));
             return;
         }
 
+        Vector2d oldPosition = animal.getPosition();
         animalMap.remove(animal.getPosition());
         animal.move(direction, this);
-        place(animal);
+        animalMap.put(animal.getPosition(), animal);
+        if (!oldPosition.equals(animal.getPosition())) mapChanged("Animal moved from %s to %s".formatted(oldPosition, animal.getPosition()));
     }
 
     @Override
@@ -47,5 +66,17 @@ public abstract class AbstractWorldMap implements WorldMap {
             elementCollection.add(entry.getValue());
 
         return elementCollection;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        return bounds;
+    }
+
+    @Override
+    public String toString() {
+        var mapVisualizer = new MapVisualizer(this);
+        Boundary mapBoundary = getCurrentBounds();
+        return mapVisualizer.draw(mapBoundary.lowerLeftVector(), mapBoundary.upperRightVector());
     }
 }

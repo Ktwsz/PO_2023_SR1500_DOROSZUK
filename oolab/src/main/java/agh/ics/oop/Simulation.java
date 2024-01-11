@@ -20,7 +20,12 @@ public class Simulation {
         for (Vector2d start : startPositions) {
             var anim = new Animal(start);
             animalsList.add(anim);
-            map.place(anim);
+            try {
+                map.place(anim);
+            } catch (PositionAlreadyOccupiedException e) {
+                animalsList.remove(animalsList.size() - 1);
+                e.printStackTrace();
+            }
         }
     }
 
@@ -31,11 +36,7 @@ public class Simulation {
 
                 map.move(animal, move);
 
-                animalIx++;
-                if (animalIx == animalsList.size()) {
-                    animalIx = 0;
-                    System.out.println(map);
-            }
+                animalIx = (animalIx + 1) % animalsList.size();
         }
     }
 
