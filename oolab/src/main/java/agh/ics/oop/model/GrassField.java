@@ -50,7 +50,7 @@ public class GrassField extends AbstractWorldMap{
     @Override
     public void move(Animal animal, MoveDirection direction) {
         super.move(animal, direction);
-
+  
         updateMapBound(animal.getPosition());
     }
 
