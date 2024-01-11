@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,5 +53,18 @@ public class RectangularMapTest {
         assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)).get());
 
         assertFalse(map.isOccupied(new Vector2d(0, 0)));
+    }
+
+    @Test
+    void sortedAnimalsTest() {
+        var map = new RectangularMap(4, 5, 1);
+        List <Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
+        assertDoesNotThrow(() -> map.place(animals.get(0)));
+        assertDoesNotThrow(() -> map.place(animals.get(1)));
+        assertDoesNotThrow(() -> map.place(animals.get(2)));
+
+        ArrayList <Animal> sortedAnimals = new ArrayList<>(map.getOrderedAnimals());
+
+        assertEquals(List.of(animals.get(1), animals.get(2), animals.get(0)), sortedAnimals);
     }
 }
