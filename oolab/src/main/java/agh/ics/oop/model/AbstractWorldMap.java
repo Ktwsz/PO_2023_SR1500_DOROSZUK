@@ -9,6 +9,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animalMap = new HashMap<>();
     protected List<MapChangeListener> listenersList = new ArrayList<>();
     protected Boundary bounds;
+    private final int id;
+
+    public AbstractWorldMap(int id) {
+        this.id = id;
+    }
 
 
     private void mapChanged(String message) {
@@ -78,5 +83,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         var mapVisualizer = new MapVisualizer(this);
         Boundary mapBoundary = getCurrentBounds();
         return mapVisualizer.draw(mapBoundary.lowerLeftVector(), mapBoundary.upperRightVector());
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 }

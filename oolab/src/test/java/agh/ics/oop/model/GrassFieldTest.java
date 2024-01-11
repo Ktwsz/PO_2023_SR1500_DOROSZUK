@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GrassFieldTest {
     @Test
     void placeTest() {
-        var map = new GrassField(10, 1);
+        var map = new GrassField(10, 1, 1);
         List<Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
 
         assertDoesNotThrow(() -> map.place(animals.get(0)));
@@ -31,7 +31,7 @@ public class GrassFieldTest {
 
     @Test
     void placeExceptionTest() {
-        var map = new GrassField(10, 1);
+        var map = new GrassField(10, 1, 1);
         List<Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(1, 1)));
 
         assertDoesNotThrow(() -> map.place(animals.get(0)));
@@ -45,7 +45,7 @@ public class GrassFieldTest {
 
     @Test
     void moveTest() {
-        var map = new GrassField(10, 1);
+        var map = new GrassField(10, 1, 1);
         List<Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
 
         assertDoesNotThrow(() -> map.place(animals.get(0)));

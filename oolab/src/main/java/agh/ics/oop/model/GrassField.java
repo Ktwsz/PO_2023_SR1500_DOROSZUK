@@ -13,7 +13,8 @@ public class GrassField extends AbstractWorldMap{
     private final Vector2d LOWER_LEFT_VECTOR = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
     private final Vector2d UPPER_RIGHT_VECTOR = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-    public GrassField(int grassCount, Integer randomSeed) {
+    public GrassField(int grassCount, Integer randomSeed, int id) {
+        super(id);
         var generator = (randomSeed != null)? new Random(randomSeed) : new Random();
         int upperBound = (int)Math.ceil(Math.sqrt(grassCount * 10));
 
@@ -29,8 +30,8 @@ public class GrassField extends AbstractWorldMap{
         }
     }
 
-    public GrassField(int grassCount) {
-        this(grassCount, null);
+    public GrassField(int grassCount, int id) {
+        this(grassCount, null, id);
     }
 
     private void updateMapBound(Vector2d pos) {

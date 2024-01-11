@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RectangularMapTest {
     @Test
     void placeTest() {
-        var map = new RectangularMap(4, 5);
+        var map = new RectangularMap(4, 5, 1);
         List <Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
         assertDoesNotThrow(() -> map.place(animals.get(0)));
         assertDoesNotThrow(() -> map.place(animals.get(1)));
@@ -30,7 +30,7 @@ public class RectangularMapTest {
 
     @Test
     void moveTest() {
-        var map = new RectangularMap(4, 5);
+        var map = new RectangularMap(4, 5, 1);
         List <Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)));
         assertDoesNotThrow(() -> map.place(animals.get(0)));
         assertDoesNotThrow(() -> map.place(animals.get(1)));
