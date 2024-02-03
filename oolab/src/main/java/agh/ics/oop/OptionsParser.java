@@ -4,6 +4,8 @@ import agh.ics.oop.model.MoveDirection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OptionsParser {
 
@@ -17,17 +19,11 @@ public class OptionsParser {
         };
     }
     public static List<MoveDirection> parse(String[] args) throws IllegalArgumentException {
-        var result = new ArrayList<MoveDirection>();
+        var illegalArg = Stream.of(args).filter(arg -> OptionsParser.parseArg(arg) == MoveDirection.NONE).findAny();
+        if (illegalArg.isPresent()) throw new IllegalArgumentException(illegalArg + " is not legal move specification");
 
-        for (String arg: args) {
-            MoveDirection dir = parseArg(arg);
-
-            if (dir == MoveDirection.NONE)
-                throw new IllegalArgumentException(arg + " is not legal move specification");
-
-            result.add(dir);
-        }
-
-        return result;
+        return Stream.of(args)
+                     .map(OptionsParser::parseArg)
+                     .collect(Collectors.toList());
     }
 }

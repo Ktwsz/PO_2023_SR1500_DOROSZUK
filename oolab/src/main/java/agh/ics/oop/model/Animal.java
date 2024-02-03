@@ -71,4 +71,14 @@ public class Animal implements WorldElement {
     public MapDirection getDirection() {
         return direction;
     }
+
+    @Override
+    public String getTexture() {
+        return "textures/" + switch (direction) {
+            case NORTH -> "up.png";
+            case WEST -> "left.png";
+            case EAST -> "right.png";
+            case SOUTH -> "down.png";
+        };
+    }
 }

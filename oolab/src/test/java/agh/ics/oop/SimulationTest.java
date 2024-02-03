@@ -26,6 +26,7 @@ public class SimulationTest {
         List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
         RectangularMap map = new RectangularMap(5, 5, 1);
         Simulation simulation = new Simulation(positions, directions, map);
+        simulation.setTimer(false);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 0)));
@@ -41,6 +42,7 @@ public class SimulationTest {
         List <Vector2d> positions = List.of(new Vector2d(2, 2));
         RectangularMap map = new RectangularMap(5, 5, 1);
         Simulation simulation = new Simulation(positions, directions, map);
+        simulation.setTimer(false);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 4)));
@@ -53,6 +55,7 @@ public class SimulationTest {
         List <Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(0, 1), new Vector2d(1, 0), new Vector2d(3, 4), new Vector2d(3, 1));
         RectangularMap map = new RectangularMap(5, 5, 1);
         Simulation simulation = new Simulation(positions, directions, map);
+        simulation.setTimer(false);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 2)));
@@ -77,6 +80,7 @@ public class SimulationTest {
         List <Vector2d> positions = List.of(new Vector2d(2, 1), new Vector2d(2, 0));
         RectangularMap map = new RectangularMap(5, 5, 1);
         Simulation simulation = new Simulation(positions, directions, map);
+        simulation.setTimer(false);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 3)));
@@ -93,6 +97,7 @@ public class SimulationTest {
         List <Vector2d> positions = List.of(new Vector2d(2, 0), new Vector2d(2, 1));
         RectangularMap map = new RectangularMap(5, 5, 1);
         Simulation simulation = new Simulation(positions, directions, map);
+        simulation.setTimer(false);
         simulation.run();
 
         assertTrue(simulation.getAnimal(0).isAt(new Vector2d(2, 1)));

@@ -19,7 +19,6 @@ public class SimulationApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         var loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
         BorderPane viewRoot = loader.load();
-        MainPresenter presenter = loader.getController();
 
         configureStage(primaryStage, viewRoot);
 
