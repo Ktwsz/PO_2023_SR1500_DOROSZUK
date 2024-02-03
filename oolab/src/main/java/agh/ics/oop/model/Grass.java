@@ -26,4 +26,9 @@ public class Grass implements WorldElement {
     public int hashCode() {
         return position.hashCode();
     }
+
+    @Override
+    public String getTexture() {
+        return "textures/grass.png";
+    }
 }

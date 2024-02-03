@@ -15,9 +15,9 @@ public class RectangularMapTest {
         assertDoesNotThrow(() -> map.place(animals.get(1)));
         assertDoesNotThrow(() -> map.place(animals.get(2)));
 
-        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)));
-        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 0)));
-        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)));
+        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)).get());
+        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 0)).get());
+        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)).get());
 
         assertTrue(map.isOccupied(animals.get(0).getPosition()));
         assertTrue(map.isOccupied(animals.get(1).getPosition()));
@@ -47,9 +47,9 @@ public class RectangularMapTest {
         assertTrue(map.isOccupied(new Vector2d(0, 4)));
         assertTrue(map.isOccupied(new Vector2d(0, 1)));
 
-        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 1)));
-        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)));
-        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)));
+        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 1)).get());
+        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)).get());
+        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)).get());
 
         assertFalse(map.isOccupied(new Vector2d(0, 0)));
     }

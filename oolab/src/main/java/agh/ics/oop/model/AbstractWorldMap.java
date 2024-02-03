@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
@@ -33,7 +34,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public void place(Animal animal) throws PositionAlreadyOccupiedException {
-        if (objectAt(animal.getPosition()) instanceof Animal) throw new PositionAlreadyOccupiedException(animal.getPosition());
+        if (objectAt(animal.getPosition()).filter(Animal.class::isInstance).isPresent()) throw new PositionAlreadyOccupiedException(animal.getPosition());
 
         animalMap.put(animal.getPosition(), animal);
         mapChanged("Placed animal at %s".formatted(animal.getPosition()));
@@ -41,7 +42,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        if (!animal.equals(objectAt(animal.getPosition()))) return;
+        if (objectAt(animal.getPosition()).filter(animal::equals).isEmpty()) return;
 
         if (direction == MoveDirection.LEFT || direction == MoveDirection.RIGHT) {
             animal.move(direction, this);
@@ -58,21 +59,28 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+        return objectAt(position).isPresent();
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animalMap.get(position);
+    public Optional <WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animalMap.get(position));
     }
 
     @Override
     public Collection <WorldElement> getElements() {
-        var elementCollection = new ArrayList<WorldElement>();
-        for (Map.Entry <Vector2d, Animal> entry: animalMap.entrySet())
-            elementCollection.add(entry.getValue());
+        return animalMap.values()
+                        .stream()
+                        .map(WorldElement.class::cast)
+                        .collect(Collectors.toList());
+    }
 
-        return elementCollection;
+    @Override
+    public Collection <Animal> getOrderedAnimals() {
+        return animalMap.values()
+                        .stream()
+                        .sorted((a1, a2) -> a1.getPosition().getX() != a2.getPosition().getX()? a1.getPosition().getX() - a2.getPosition().getX() : a1.getPosition().getY() - a2.getPosition().getY())
+                        .collect(Collectors.toList());
     }
 
     @Override

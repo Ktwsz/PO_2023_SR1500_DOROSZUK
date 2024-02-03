@@ -16,17 +16,17 @@ public class GrassFieldTest {
         assertDoesNotThrow(() -> map.place(animals.get(1)));
         assertDoesNotThrow(() -> map.place(animals.get(2)));
 
-        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)));
-        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 0)));
-        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)));
+        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)).get());
+        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 0)).get());
+        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 4)).get());
 
         assertTrue(map.isOccupied(animals.get(0).getPosition()));
         assertTrue(map.isOccupied(animals.get(1).getPosition()));
         assertTrue(map.isOccupied(animals.get(2).getPosition()));
 
-        assertEquals(new Grass(new Vector2d(2, 4)), map.objectAt(new Vector2d(2, 4)));
-        assertEquals(new Grass(new Vector2d(4, 4)), map.objectAt(new Vector2d(4, 4)));
-        assertEquals(new Grass(new Vector2d(2, 2)), map.objectAt(new Vector2d(2, 2)));
+        assertEquals(new Grass(new Vector2d(2, 4)), map.objectAt(new Vector2d(2, 4)).get());
+        assertEquals(new Grass(new Vector2d(4, 4)), map.objectAt(new Vector2d(4, 4)).get());
+        assertEquals(new Grass(new Vector2d(2, 2)), map.objectAt(new Vector2d(2, 2)).get());
     }
 
     @Test
@@ -63,10 +63,23 @@ public class GrassFieldTest {
         assertTrue(map.isOccupied(new Vector2d(0, 6)));
         assertTrue(map.isOccupied(new Vector2d(0, 1)));
 
-        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 1)));
-        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)));
-        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 6)));
+        assertEquals(animals.get(1), map.objectAt(new Vector2d(0, 1)).get());
+        assertEquals(animals.get(0), map.objectAt(new Vector2d(1, 1)).get());
+        assertEquals(animals.get(2), map.objectAt(new Vector2d(0, 6)).get());
 
         assertFalse(map.isOccupied(new Vector2d(0, 0)));
+    }
+
+    @Test
+    void getOrderedAnimalsTest() {
+        var map = new GrassField(10, 1, 1);
+        List<Animal> animals = List.of(new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)), new Animal(new Vector2d(5, 5)));
+
+        assertDoesNotThrow(() -> map.place(animals.get(0)));
+        assertDoesNotThrow(() -> map.place(animals.get(1)));
+        assertDoesNotThrow(() -> map.place(animals.get(2)));
+        assertDoesNotThrow(() -> map.place(animals.get(3)));
+
+        assertEquals(List.of(new Animal(new Vector2d(0, 0)), new Animal(new Vector2d(0, 4)), new Animal(new Vector2d(1, 1)), new Animal(new Vector2d(5, 5))), map.getOrderedAnimals());
     }
 }

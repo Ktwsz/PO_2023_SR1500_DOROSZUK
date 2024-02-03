@@ -6,4 +6,6 @@ public interface WorldElement {
     int hashCode();
     Vector2d getPosition();
 
+    String getTexture();
+
 }

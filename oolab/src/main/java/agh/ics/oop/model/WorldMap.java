@@ -4,6 +4,7 @@ import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -43,7 +44,7 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    WorldElement objectAt(Vector2d position);
+    Optional<WorldElement> objectAt(Vector2d position);
 
     Collection <WorldElement> getElements();
 
@@ -52,4 +53,6 @@ public interface WorldMap extends MoveValidator {
     int getId();
     void addListener(MapChangeListener listener);
     void removeListener(MapChangeListener listener);
+
+    Collection <Animal> getOrderedAnimals();
 }
