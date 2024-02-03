@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            fx:controller="agh.ics.oop.presenter.SimulationPresenter"
+            stylesheets="main.css">
+    <center>
+        <HBox>
+            <GridPane fx:id="simulationGrid" gridLinesVisible="true" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </center>
+    <bottom>
+            <HBox styleClass="BottomHBox">
+                <Label fx:id="moveDescLabel" textAlignment="CENTER" />
+            </HBox>
+    </bottom>
+</BorderPane>

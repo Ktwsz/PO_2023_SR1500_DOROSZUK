@@ -1,0 +1,10 @@
+
+.BottomHBox {
+    -fx-alignment: center;
+    -fx-spacing: 8;
+    -fx-padding: 16;
+}
+
+GridPane {
+    -fx-alignment: center;
+}
